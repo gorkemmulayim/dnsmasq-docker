@@ -1,8 +1,11 @@
 FROM alpine
 
-RUN apk --no-cache add dnsmasq
-COPY dnsmasq.conf /etc/dnsmasq.conf
+RUN apk add --no-cache dnsmasq
+RUN mkdir /dnsmasq
+RUN mkdir /dnsmasq.d
+COPY dnsmasq.conf /dnsmasq/dnsmasq.conf
+RUN touch /dnsmasq/hosts
 
 EXPOSE 53
 
-CMD dnsmasq --no-daemon
+CMD dnsmasq --conf-file=/dnsmasq/dnsmasq.conf --no-daemon
